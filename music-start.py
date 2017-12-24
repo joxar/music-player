@@ -1,13 +1,13 @@
 #-*- cording: utf-8 -*-
-import os
-import sys
 import subprocess
+import ConfigParser
+
+config = ConfigParser.ConfigParser()
+config.read('setting.ini')
+sec = 'develop'
 
 def start():
-    pathToMP3 = "mp3/*.MP3"
+    pathToMP3 = config.get(sec, 'inputDir') + "/*.MP3"
     p = subprocess.call("mpg321 --loop 0 --shuffle -K " + pathToMP3, shell=True).getpid()
-    f = open('pid.txt', 'w')
-    f.write(str(p))
-    f.close()
 
 start()
